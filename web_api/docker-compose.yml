@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     build: .
-    command: gunicorn -c gconfig.py src.main:app --reload
+    command: gunicorn -c gconfig.py src.app:app --reload
     volumes:
       - .:/app
     env_file:

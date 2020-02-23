@@ -18,11 +18,21 @@
 
 `$ cd calculator`
 
-`$ docker-compose up -d`
+`$ docker-compose up -d rabbitmq postgres adminer elasticsearch kibana apm`
+
+> Wait for all dependencies be up
+
+`$ docker-compose up -d web consumer`
 
 ### How to interact with the Application
 
-###### Access `API Swagger Endpoint` : <http://localhost:5000/api/docs/>
+###### Access `API Swagger Endpoint` : <http://localhost:5000/docs>
+
+> To user any requests insert the Api-Key value on Authorize field
+
+| Credentials | Value|
+|------------|-------|
+|Api-Key |secret-api-key |
 
 ### Monitoring with Elastic APM
 
@@ -42,6 +52,8 @@
 ### How to interact with PostgreSQL
 
 ###### Access `Adminer Endpoint` : <http://localhost:8080>
+
+> Use this interface to visualize the final result on the database
 
 | Credentials | Value|
 |------------|-------|

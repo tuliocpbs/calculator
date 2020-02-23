@@ -1,0 +1,1 @@
+create table result(delivery_tag int, result float, msg text);

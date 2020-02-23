@@ -13,4 +13,5 @@ CORS(app)
 apm = ElasticAPM(app)
 
 healthcheck.init_app(app)
+swagger.init_app(app)
 restapi.init_app(app)

@@ -1,0 +1,124 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API to receive operation such as sum, subtract, divede or multiply and insert in a queue.",
+    "version": "1.0.0",
+    "title": "API to receive calculator operation"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Insert Job Calculator in a queue",
+      "description": "Insert and update tickets in a queue."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/calculator": {
+      "post": {
+        "tags": [
+          "Insert"
+        ],
+        "summary": "Insert job in a queue.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "new job",
+            "in": "body",
+            "required": true,
+            "description": "operation to execute and a list of numbers",
+            "schema": {
+              "type": "object",
+              "required": [
+                "function",
+                "arguments"
+              ],
+              "properties": {
+                "function": {
+                  "type": "string",
+                  "example": "sum"
+                },
+                "arguments": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "example": [
+                    0,
+                    1,
+                    2,
+                    3
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job inserted in queue",
+            "schema": {
+              "$ref": "#/definitions/SuccessfulResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid payload",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Unexpected error on server",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "ok"
+        },
+        "msg": {
+          "type": "string",
+          "example": "Job inserted on queue"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "error"
+        },
+        "msg": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Api-Key",
+      "in": "header"
+    }
+  }
+}

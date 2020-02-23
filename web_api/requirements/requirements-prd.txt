@@ -1,0 +1,9 @@
+elastic-apm[flask]==5.2.2
+Flask==1.1.1
+Flask-Cors==3.0.8
+Flask-RESTful==0.3.8
+flask-swagger-ui==3.20.9
+gunicorn==19.9.0
+pika==1.1.0
+python-json-logger==0.1.11
+schematics==2.1.0

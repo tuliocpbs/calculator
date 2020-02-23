@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: gunicorn -c gconfig.py src.main:app --reload
+    volumes:
+      - .:/app
+    env_file:
+      - env.example
+    ports:
+      - 5000:80
+    depends_on:
+      - rabbitmq
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+  elasticsearch:
+    image: elasticsearch:7.4.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  apm:
+    image: docker.elastic.co/apm/apm-server:7.1.1
+    ports:
+      - 8200:8200
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./apm-server.yml:/etc/apm-server/apm-server.yml

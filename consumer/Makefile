@@ -6,3 +6,6 @@ clean-pyc:
 
 healthcheck:
 	python src/utils/healthcheck.py
+
+run-tests:
+	@pytest
